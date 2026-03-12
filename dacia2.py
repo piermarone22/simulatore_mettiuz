@@ -8,49 +8,6 @@ st.set_page_config(
     layout="wide"
 )
 
-# ---------- LOGIN ----------
-def check_login():
-    if "logged_in" not in st.session_state:
-        st.session_state.logged_in = False
-
-    if st.session_state.logged_in:
-        return True
-
-    st.title("🔐 Accesso")
-    st.write("Inserisci le credenziali per accedere al simulatore.")
-
-    with st.form("login_form"):
-        username = st.text_input("Username")
-        password = st.text_input("Password", type="password")
-        submitted = st.form_submit_button("Accedi")
-
-        if submitted:
-            saved_user = st.secrets["auth"]["username"]
-            saved_pass = st.secrets["auth"]["password"]
-
-            if username == saved_user and password == saved_pass:
-                st.session_state.logged_in = True
-                st.success("Accesso effettuato con successo.")
-                st.rerun()
-            else:
-                st.error("Username o password non corretti.")
-
-    return False
-
-
-def logout_button():
-    with st.sidebar:
-        st.markdown("### Account")
-        if st.button("Logout"):
-            st.session_state.logged_in = False
-            st.rerun()
-
-
-if not check_login():
-    st.stop()
-
-logout_button()
-
 # ---------- CSS ----------
 st.markdown("""
 <style>
